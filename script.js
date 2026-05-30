@@ -1,14 +1,8 @@
 /* =========================================================
-   Dinakaran N — Portfolio  |  script.js
+   Dinakaran A — Portfolio (Dark / Bento)  |  script.js
    ========================================================= */
 
-// Add a solid background to the nav once the page is scrolled.
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// Reveal elements as they enter the viewport.
+// Reveal cells as they scroll into view.
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -16,6 +10,15 @@ const observer = new IntersectionObserver((entries) => {
       observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+document.querySelectorAll('.rv').forEach((el) => observer.observe(el));
+
+// Cursor-following spotlight glow on each bento cell.
+document.querySelectorAll('.cell').forEach((card) => {
+  card.addEventListener('pointermove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+  });
+});
